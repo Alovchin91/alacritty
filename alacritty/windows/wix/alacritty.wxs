@@ -15,7 +15,7 @@
       <!-- Application binaries -->
       <DirectoryRef Id="AlacrittyProgramFiles">
          <Component Id="AlacrittyExe">
-            <File Id="AlacrittyExeFile" Source=".\target\release\alacritty.exe" Name="alacritty.exe" KeyPath="yes" />
+            <File Id="AlacrittyExeFile" Source=".\target\x86_64-pc-windows-msvc\release\alacritty.exe" Name="alacritty.exe" KeyPath="yes" />
          </Component>
       </DirectoryRef>
       <DirectoryRef Id="AlacrittyProgramMenu">

@@ -39,14 +39,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test
-        run: cargo test --release
-      - name: Build
-        run: cargo build --release
+        run: cargo test --release --target=x86_64-pc-windows-msvc
+      - name: Build x64
+        run: cargo build --release --target=x86_64-pc-windows-msvc
+      - name: Build aarch64
+        run: |
+          rustup target add aarch64-pc-windows-msvc
+          cargo build --release --target=aarch64-pc-windows-msvc
       - name: Upload portable executable
         run: |
-          cp ./target/release/alacritty.exe ./Alacritty-${GITHUB_REF##*/}-portable.exe
+          cp ./target/x86_64-pc-windows-msvc/release/alacritty.exe ./Alacritty-${GITHUB_REF##*/}-portable.exe
+          cp ./target/aarch64-pc-windows-msvc/release/alacritty.exe ./Alacritty-${GITHUB_REF##*/}-portable-aarch64.exe
           ./.github/workflows/upload_asset.sh \
             ./Alacritty-${GITHUB_REF##*/}-portable.exe $GITHUB_TOKEN
+          ./.github/workflows/upload_asset.sh \
+            ./Alacritty-${GITHUB_REF##*/}-portable-aarch64.exe $GITHUB_TOKEN
       - name: Install WiX
         run: dotnet tool install --global wix --version 4.0.5
       - name: Create msi installer
